@@ -21,14 +21,20 @@ public class LineTouchView extends View {
     Line line2;
     Line line3;
 
+    float actualValue;
+
+    Canvas canvas;
+
     public LineTouchView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         paint = new Paint();
 
-        line1 = new Line("1", false);
-        line2 = new Line("2", false);
-        line3 = new Line("3", true);
+        actualValue = 0.0f;
+
+        line1 = new Line("1", true, false);
+        line2 = new Line("2", true, false);
+        line3 = new Line("3", true, true);
 
         setOnTouchListener(new OnTouchListener() {
             @Override
@@ -46,6 +52,26 @@ public class LineTouchView extends View {
         line1.drawLine(canvas, mY);
         line2.drawLine(canvas, mY);
         line3.drawLine(canvas, mY);
+
+        if (actualValue != 0.0f) {
+            drawActualValueToCanvas(canvas);
+        }
+
+        this.canvas = canvas;
+    }
+
+    private void drawActualValueToCanvas(Canvas canvas) {
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setTextSize(60);
+        String text = "" + actualValue + "%";
+        canvas.drawText(text, 10, canvas.getHeight() - 60, paint);
+    }
+
+    public void drawValue(float v) {
+        actualValue = v;
+
+        invalidate();
     }
 
     class Line {
@@ -53,13 +79,15 @@ public class LineTouchView extends View {
         Paint paint;
         boolean isActive;
         boolean isShowValue;
+        boolean isRealValue;
         float y;
         float p;
 
-        Line(String name, boolean isShowValue) {
+        Line(String name, boolean isShowValue, boolean isRealValue) {
             this.name = name;
             isActive = false;
             this.isShowValue = isShowValue;
+            this.isRealValue = isRealValue;
             paint = new Paint();
             y = 0;
         }

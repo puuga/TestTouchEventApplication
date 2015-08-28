@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TestTouchEventApplication</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="btn_line_1">Line 1</string>
+    <string name="btn_line_2">Line 2</string>
+    <string name="btn_line_3">Line 3</string>
+
+</resources>
